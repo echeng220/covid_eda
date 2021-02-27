@@ -125,3 +125,19 @@ avg(datediff(Case_Reported_Date, Accurate_Episode_Date)) as avg_diff
 from covid.ontario
 group by Age_Group, crd
 order by crd;
+
+/*Take random sample of 100 cases in Toronto*/
+select t.Age_Group, count(*) from 
+(select * from covid.ontario
+where Age_Group <> 'UNKNOWN' and Age_group is not null and Age_Group <> '' and Reporting_PHU_City = 'Toronto'
+order by rand()
+limit 100) as t
+group by t.Age_Group;
+
+/*Take random sample of 100 cases in Toronto*/
+select w.Age_Group, count(*) from 
+(select * from covid.ontario
+where Age_Group <> 'UNKNOWN' and Age_group is not null and Age_Group <> '' and Reporting_PHU_City = 'Toronto'
+order by rand()
+limit 100) as w
+group by w.Age_Group;
